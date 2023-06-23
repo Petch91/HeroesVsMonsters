@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace HeroesVsMonsters.Entities.Monsters
 {
-    public class Monster : Entity
+    public abstract class Monster : Entity
     {
+        
+        public abstract Inventory Loot { get; }
         public override void Attack(Entity t)
         {
             int damage = Dice.Throws(DiceType.D4);
@@ -30,7 +32,10 @@ namespace HeroesVsMonsters.Entities.Monsters
                         break;
                     }
             }
+            damage = t.IsDefented ? damage/2 : damage;
+            Console.WriteLine($"Attaque de {damage}");
             t.TakeDamage(damage);
+            
         }
 
         protected override void GenerateStats()
@@ -38,5 +43,6 @@ namespace HeroesVsMonsters.Entities.Monsters
             StatEntity[StatType.Str] = Dice.Throws(DiceType.D6, 5, 3);
             StatEntity[StatType.Stamina] = Dice.Throws(DiceType.D6, 5, 3);
         }
+
     }
 }

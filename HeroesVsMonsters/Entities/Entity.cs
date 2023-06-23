@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HeroesVsMonsters.Entities.Monsters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,28 +7,56 @@ using System.Threading.Tasks;
 
 namespace HeroesVsMonsters.Entities
 {
+    
     public abstract class Entity
     {
+        public event Action<Entity> DieEvent;
         protected Entity()
         {
+            StatEntity = new Stats();
             GenerateStats();
-            StatEntity[StatType.Hp] = StatEntity[StatType.Str] + StatEntity[StatType.Stamina] < 15 ? -2 : +3;
+            StatEntity[StatType.Hp] = StatEntity[StatType.Str] + (StatEntity[StatType.Stamina] < 25 ? -2 : +3);
             StatEntity[StatType.CurrentHp] = StatEntity[StatType.Hp];
         }
 
+        public string Name { get; set; }
+
         public Stats StatEntity { get; set; }
+        public bool IsDefented { get; protected set; }
 
         public  bool IsAlive()
         {
             return StatEntity[StatType.CurrentHp] > 0;
         }
-        public void TakeDamage(int amount)
+        public virtual void TakeDamage(int amount)
         {
             StatEntity[StatType.CurrentHp] -= amount;
-            if(!IsAlive() ) StatEntity[StatType.CurrentHp] = 0;
+            if (!IsAlive())
+            {
+                StatEntity[StatType.CurrentHp] = 0;
+                RaiseDieEvent();
+            }
         }
         public abstract void Attack(Entity target);
 
         protected abstract void GenerateStats();
+
+        public virtual void ShowStats()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"------------------------------\n" +
+                          $"{StatEntity[StatType.CurrentHp]}/{StatEntity[StatType.Hp]}\n" +
+                          $"Force:{StatEntity[StatType.Str]}\n" +
+                          $"Stamina: {StatEntity[StatType.Stamina]}\n"+
+                          $"------------------------------"
+                         );
+            Console.WriteLine(sb);
+        }
+
+        protected void RaiseDieEvent()
+        {
+            DieEvent?.Invoke(this);
+        }
+
     }
 }
