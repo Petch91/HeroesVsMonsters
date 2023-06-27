@@ -33,7 +33,6 @@ namespace HeroesVsMonsters.Entities.Monsters
                     }
             }
             damage = t.IsDefented ? damage/2 : damage;
-            Console.WriteLine($"Attaque de {damage}");
             t.TakeDamage(damage);
             
         }

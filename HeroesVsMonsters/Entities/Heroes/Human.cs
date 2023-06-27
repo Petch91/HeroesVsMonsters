@@ -13,6 +13,8 @@ namespace HeroesVsMonsters.Entities.Heroes
         public Human(string name) : base(name)
         {
             SpecialSkill = "Boule de feu";
+            X = 7;
+            Y = 8;
         }
 
         public override string SpecialSkill { get; }

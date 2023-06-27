@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HeroesVsMonsters.Entities
 {
@@ -11,6 +12,15 @@ namespace HeroesVsMonsters.Entities
     public abstract class Entity
     {
         public event Action<Entity> DieEvent;
+        protected Entity(string name)
+        {
+            StatEntity = new Stats();
+            GenerateStats();
+            StatEntity[StatType.Hp] = StatEntity[StatType.Str] + (StatEntity[StatType.Stamina] < 25 ? -2 : +3);
+            StatEntity[StatType.CurrentHp] = StatEntity[StatType.Hp];
+            Name = name;
+        }
+
         protected Entity()
         {
             StatEntity = new Stats();
@@ -30,6 +40,7 @@ namespace HeroesVsMonsters.Entities
         }
         public virtual void TakeDamage(int amount)
         {
+            Console.WriteLine($"{Name} subit {amount} de dégats");
             StatEntity[StatType.CurrentHp] -= amount;
             if (!IsAlive())
             {

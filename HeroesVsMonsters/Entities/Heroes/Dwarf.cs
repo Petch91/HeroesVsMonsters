@@ -11,6 +11,8 @@ namespace HeroesVsMonsters.Entities.Heroes.Heroes
         public Dwarf(string name) : base(name)
         {
             SpecialSkill = "Défense";
+            X = 5;
+            Y = 10;
         }
 
         public override string SpecialSkill { get; }
