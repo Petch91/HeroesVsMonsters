@@ -90,10 +90,19 @@ namespace HeroesVsMonsters.Utils
         public static void Fight(Hero fighter1, Entity fighter2)
         {
             Console.WriteLine($"{fighter2.Name} vous attaque, soyez prêt!");
+            int choix = 1; 
             while (fighter1.IsAlive() && fighter2.IsAlive())
             {
-
-                int choix = Menu.SelectAction(fighter1);
+                int index = 1;
+                ConsoleKeyInfo cki;
+                do
+                {
+                    FightMenu.Show(fighter1, index, (152, 42));
+                    cki = Console.ReadKey();
+                    Menu.Browse(cki, FightMenu.GetSizeMenu(), ref index);
+                } while (cki.Key != ConsoleKey.Enter);
+                
+                choix = Menu.SelectAction(index);
                 switch (choix)
                 {
                     case 1:

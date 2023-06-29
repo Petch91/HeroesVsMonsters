@@ -9,47 +9,29 @@ namespace HeroesVsMonsters.Menus
 {
     public static class Menu
     {
-        private static void ShowMenuFight(Hero fighter1, int cursorPosi)
+        public static int SelectAction(int cursorPos )
         {
-            //(int, int) cursorPosi = (0, 0);
-            Console.Clear();
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"------|{fighter1.Name}|------");
-            sb.AppendLine((cursorPosi == 1 ? "=>" : "") + $"- Attaque ");
-            sb.AppendLine((cursorPosi == 2 ? "=>" : "") + $"- {fighter1.SpecialSkill} ");
-            sb.AppendLine((cursorPosi == 3 ? "=>" : "") + $"- Soin ");
-            sb.AppendLine((cursorPosi == 4 ? "=>" : "") + $"- Fuir ");
-            sb.AppendLine("------------------------------");
-            Console.WriteLine(sb);
+            return cursorPos;
         }
 
-        public static int SelectAction(Hero fighter)
+        public static void Browse(ConsoleKeyInfo cki, int size, ref int cursorPosi)
         {
-            ConsoleKeyInfo cki;
-            Console.SetCursorPosition(0, 1);
-            int cursorPosi = 1;
-            do
+
+            switch (cki.Key)
             {
-                ShowMenuFight(fighter, cursorPosi);
-                cki = Console.ReadKey();
-                switch (cki.Key)
-                {
-                    case ConsoleKey.UpArrow:
-                        {
-                            cursorPosi--;
-                            if (cursorPosi <= 0) cursorPosi = 4;
-                            break;
-                        }
-                    case ConsoleKey.DownArrow:
-                        {
-                            cursorPosi++;
-                            if (cursorPosi > 4) cursorPosi = 1;
-                            break;
-                        }
-                }
-            } while (cki.Key != ConsoleKey.Enter);
-            Console.Clear();
-            return cursorPosi;
+                case ConsoleKey.UpArrow:
+                    {
+                        cursorPosi--;
+                        if (cursorPosi <= 0) cursorPosi = size;
+                        break;
+                    }
+                case ConsoleKey.DownArrow:
+                    {
+                        cursorPosi++;
+                        if (cursorPosi > size) cursorPosi = 1;
+                        break;
+                    }
+            }
         }
 
     }

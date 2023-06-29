@@ -2,11 +2,15 @@
 using HeroesVsMonsters.Entities;
 using HeroesVsMonsters.Entities.Heroes;
 using HeroesVsMonsters.Entities.Monsters;
+using HeroesVsMonsters.Menus;
 using HeroesVsMonsters.Utils;
 
 Hud.ShowHud();
-//Human dante = new Human("Dante");
-//Map map = new Map(dante);
+
+Human dante = new Human("Dante");
+Map map = new Map(dante);
+
+map.ShowMap();
 //while (true)
 //{
 //    Game.Navigation(dante, map);
