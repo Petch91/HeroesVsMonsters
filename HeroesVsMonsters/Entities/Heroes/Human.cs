@@ -21,19 +21,23 @@ namespace HeroesVsMonsters.Entities.Heroes
 
         public override void Attack(Entity t)
         {
-            Console.WriteLine("Coup d'épée dans ta gueule");
+            string message = "Coup d'épée dans ta gueule";
+            Hud.ShowInDialogBox(message, message.Length);
+            Console.ReadKey();
             base.Attack(t); 
         }
         protected override void GenerateStats()
         {
             base.GenerateStats();
-            StatEntity[StatType.Str] += 1;
+            StatEntity[StatType.Strength] += 1;
             StatEntity[StatType.Stamina] += 1;
         }
 
         public override void UseSkill(Entity e)
         {
-            Console.WriteLine("Boule de feu dans ta gueule");
+            string message = "Boule de feu dans ta gueule";
+            Hud.ShowInDialogBox(message, message.Length);
+            Console.ReadKey();
             e.TakeDamage(Dice.Throws(DiceType.D6, 2, 2));
         }
     }

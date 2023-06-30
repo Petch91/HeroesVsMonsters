@@ -1,4 +1,5 @@
-﻿using HeroesVsMonsters.Utils;
+﻿using HeroesVsMonsters.Entities.Heroes;
+using HeroesVsMonsters.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,12 @@ namespace HeroesVsMonsters.Entities.Monsters
             int damage = Dice.Throws(DiceType.D4);
             switch (true)
             {
-                case true when StatEntity[StatType.Str] < 5:
+                case true when StatEntity[StatType.Strength] < 5:
                     {
                         damage -= 1;
                         break;
                     }
-                case true when StatEntity[StatType.Str] < 15:
+                case true when StatEntity[StatType.Strength] < 15:
                     {
                         damage += 1;
                         break;
@@ -34,13 +35,15 @@ namespace HeroesVsMonsters.Entities.Monsters
             }
             damage = t.IsDefented ? damage/2 : damage;
             t.TakeDamage(damage);
-            
+            if (t is Hero h) Hud.ShowInHeroFightBox(h);
+
         }
 
         protected override void GenerateStats()
         {
-            StatEntity[StatType.Str] = Dice.Throws(DiceType.D6, 5, 3);
+            StatEntity[StatType.Strength] = Dice.Throws(DiceType.D6, 5, 3);
             StatEntity[StatType.Stamina] = Dice.Throws(DiceType.D6, 5, 3);
+            StatEntity[StatType.Speed] = Dice.Throws(DiceType.D10, 5, 2);
         }
 
     }

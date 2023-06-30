@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HeroesVsMonsters.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,13 +21,16 @@ namespace HeroesVsMonsters.Entities.Heroes.Heroes
 
         public override void Attack(Entity t)
         {
-            Console.WriteLine("Coup de hache dans ta gueule");
+            string message = "Coup de hache dans ta gueule";
+            Hud.ShowInDialogBox(message, message.Length);
+            Console.ReadKey();
             base.Attack(t);
         }
         protected override void GenerateStats()
         {
             base.GenerateStats();
             StatEntity[StatType.Stamina] += 2;
+            StatEntity[StatType.Speed] -= 2;
         }
 
         public override void UseSkill(Entity e)

@@ -4,9 +4,10 @@
     public enum StatType
     {
         Hp,
-        CurrentHp,
-        Str,
-        Stamina
+        Strength,
+        Stamina,
+        Speed
+
     }
     public class Stats
     {

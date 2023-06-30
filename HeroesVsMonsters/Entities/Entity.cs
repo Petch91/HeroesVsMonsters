@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -16,8 +17,8 @@ namespace HeroesVsMonsters.Entities
         {
             StatEntity = new Stats();
             GenerateStats();
-            StatEntity[StatType.Hp] = StatEntity[StatType.Str] + (StatEntity[StatType.Stamina] < 25 ? -2 : +3);
-            StatEntity[StatType.CurrentHp] = StatEntity[StatType.Hp];
+            StatEntity[StatType.Hp] = StatEntity[StatType.Strength] + (StatEntity[StatType.Stamina] < 25 ? -2 : +3);
+            CurrentHp = StatEntity[StatType.Hp];
             Name = name;
         }
 
@@ -25,26 +26,31 @@ namespace HeroesVsMonsters.Entities
         {
             StatEntity = new Stats();
             GenerateStats();
-            StatEntity[StatType.Hp] = StatEntity[StatType.Str] + (StatEntity[StatType.Stamina] < 25 ? -2 : +3);
-            StatEntity[StatType.CurrentHp] = StatEntity[StatType.Hp];
+            StatEntity[StatType.Hp] = StatEntity[StatType.Strength] + (StatEntity[StatType.Stamina] < 25 ? -2 : +3);
+            CurrentHp = StatEntity[StatType.Hp];
         }
 
         public string Name { get; set; }
+        public int CurrentHp { get; protected set; }
 
         public Stats StatEntity { get; set; }
         public bool IsDefented { get; protected set; }
 
         public  bool IsAlive()
         {
-            return StatEntity[StatType.CurrentHp] > 0;
+            return CurrentHp > 0;
         }
         public virtual void TakeDamage(int amount)
         {
-            Console.WriteLine($"{Name} subit {amount} de dégats");
-            StatEntity[StatType.CurrentHp] -= amount;
+            
+            string message = $"{Name} subit {amount} de dégats";
+            Hud.ShowInDialogBox(message, message.Length);
+            Console.ReadKey();
+            Hud.ShowInDialogBox(" ", 1);
+            CurrentHp -= amount;
             if (!IsAlive())
             {
-                StatEntity[StatType.CurrentHp] = 0;
+                CurrentHp = 0;
                 RaiseDieEvent();
             }
         }
@@ -56,8 +62,8 @@ namespace HeroesVsMonsters.Entities
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"------------------------------\n" +
-                          $"{StatEntity[StatType.CurrentHp]}/{StatEntity[StatType.Hp]}\n" +
-                          $"Force:{StatEntity[StatType.Str]}\n" +
+                          $"{CurrentHp}/{StatEntity[StatType.Hp]}\n" +
+                          $"Force:{StatEntity[StatType.Strength]}\n" +
                           $"Stamina: {StatEntity[StatType.Stamina]}\n"+
                           $"------------------------------"
                          );

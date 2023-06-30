@@ -20,13 +20,15 @@ namespace HeroesVsMonsters.Entities.Monsters
 
         public override void Attack(Entity t)
         {
-            Console.WriteLine("Je vais te bouffer");
+            string message = "Je vais te bouffer";
+            Hud.ShowInDialogBox(message, message.Length);
+            Console.ReadKey();
             base.Attack(t);
         }
         protected override void GenerateStats()
         {
             base.GenerateStats();
-            StatEntity[StatType.Str] += 1;
+            StatEntity[StatType.Strength] += 1;
         }
     }
 }

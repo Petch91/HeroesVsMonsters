@@ -25,8 +25,17 @@ namespace HeroesVsMonsters.Menus
             foreach(FightButton fb in Enum.GetValues(typeof(FightButton)))
             {
                 Console.SetCursorPosition(posInitiale.Item1 , posInitiale.Item2+i);
-                Console.WriteLine((cursorPosi == i ? "=>" : "") + $" {fb}     ");
+                if (cursorPosi == i)
+                {
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                Console.Write((cursorPosi == i ? "=>" : "") + $" {fb}");
+                Console.BackgroundColor = ConsoleColor.DarkGray;
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine("           ");
                 i++;
+
 
             }
 
@@ -36,5 +45,17 @@ namespace HeroesVsMonsters.Menus
         {
             return Enum.GetValues(typeof(FightButton)).Length;
         }
+
+        public static void ClearMenu((int, int) posInitiale)
+        {
+
+            for (int i = 0; i<= Enum.GetValues(typeof(FightButton)).Length; i++)
+            {
+                Console.SetCursorPosition(posInitiale.Item1, posInitiale.Item2 + i);
+                Console.WriteLine(new string(' ',20));
+
+            }
+        }
+
     }
 }

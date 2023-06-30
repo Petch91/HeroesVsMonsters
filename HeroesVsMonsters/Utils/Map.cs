@@ -32,8 +32,8 @@ namespace HeroesVsMonsters.Utils
                     ShowedMap[i, j] = " ";
                 }
             }
-            ShowedMap[h.X, h.Y] = "H";
-            ShowedMap[h.X, h.Y] = "H";
+            ShowedMap[h.X, h.Y] = "☻";
+            ShowedMap[h.X, h.Y] = "☻";
             int countMonsters = 0;
             for (int i = 0; i < ShowedMap.GetLength(0) && countMonsters <= 15; i++)
             {
@@ -91,19 +91,26 @@ namespace HeroesVsMonsters.Utils
                     //}
                 }
             }
-            ShowedMap[h.X, h.Y] = "H";
+            ShowedMap[h.X, h.Y] = "☻";
         }
         public void ShowMap()
         {
-            Console.BackgroundColor = ConsoleColor.DarkGreen;
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
 
             for (int i = 0; i < ShowedMap.GetLength(0); i++)
             {
                 Console.SetCursorPosition(1, 5+i);
                 for (int j = 0; j < ShowedMap.GetLength(1); j++)
                 {
-                    Console.Write(ShowedMap[i, j]);
+                    if (ShowedMap[i, j] == "☻")
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(ShowedMap[i, j], ConsoleColor.White);
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    }
+
+                    else Console.Write(ShowedMap[i, j]);
                 }
                 Console.WriteLine();
             }

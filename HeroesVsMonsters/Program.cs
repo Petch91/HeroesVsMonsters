@@ -4,17 +4,20 @@ using HeroesVsMonsters.Entities.Heroes;
 using HeroesVsMonsters.Entities.Monsters;
 using HeroesVsMonsters.Menus;
 using HeroesVsMonsters.Utils;
+using System.Text;
 
-Hud.ShowHud();
+Console.OutputEncoding = System.Text.Encoding.UTF8;
+
 
 Human dante = new Human("Dante");
 Map map = new Map(dante);
-
-map.ShowMap();
-//while (true)
-//{
-//    Game.Navigation(dante, map);
-//}
+Console.SetCursorPosition(0, 0);
+Hud.ShowHud();
+while (true)
+{
+    Hud.ShowInStatBox(dante);
+    Game.Navigation(dante, map);
+}
 //List<Monster> monsters = new List<Monster>();
 
 

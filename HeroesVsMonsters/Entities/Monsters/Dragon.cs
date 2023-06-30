@@ -21,7 +21,9 @@ namespace HeroesVsMonsters.Entities.Monsters
 
         public override void Attack(Entity t)
         {
-            Console.WriteLine("Dracofeu attaque Lance-Flammes");
+            string message = "Dracofeu attaque Lance-Flammes";
+            Hud.ShowInDialogBox(message, message.Length);
+            Console.ReadKey();
             base.Attack(t);
         }
 
@@ -30,5 +32,6 @@ namespace HeroesVsMonsters.Entities.Monsters
             base.GenerateStats();
             StatEntity[StatType.Stamina] += 1;
         }
+
     }
 }

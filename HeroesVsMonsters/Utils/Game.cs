@@ -15,82 +15,65 @@ namespace HeroesVsMonsters.Utils
 
         public static void Navigation(Hero h, Map m)
         {
-            string monster = " ";
-            (int, int) monsterPosi;
             m.ShowMap();
+            Hud.ShowInInventoryBox(h);
             (int, int) previousPos = h.MoveHero(m.xMax, m.yMax);
-            m.ModifyMaps("H",(h.X,h.Y), previousPos );
-            if (IsFight(h,m, out monster, out monsterPosi))
+            m.ModifyMaps("☻", (h.X, h.Y), previousPos);
+            if (IsFight())
             {
-                m.ModifyShowedMap(monster, monsterPosi);
-                Fight(h,ChooseMonster(h, monster));
-                if (h.IsAlive()) m.ModifyMaps(" ", monsterPosi);
+                Hud.ClearMap(m);
+                
+                Fight(h, ChooseMonster(h));
             }
-            Console.Clear();
+            //Console.Clear();
         }
-        private static Monster ChooseMonster(Hero h, string monster) 
+        private static Monster ChooseMonster(Hero h)
         {
-            switch (monster) 
+            Random r = new Random();
+            int rng = r.Next(4);
+
+            switch (rng)
             {
-                case "L":
-                    {
-                        Wolf wolf = new Wolf();
-                        wolf.DieEvent += h.DieAction;
-                        return wolf;
-                    }
-                case "O":
-                    {
-                        Orc orc = new Orc();
-                        orc.DieEvent += h.DieAction;
-                        return orc;
-                    }
-                case "D":
-                    {
-                        Dragon dragon = new Dragon();
-                        dragon.DieEvent += h.DieAction;
-                        return dragon;
-                    }
+
+
+                case 2:
+                    Orc orc = new Orc();
+                    Logo.ShowOrcLogo();
+                    orc.DieEvent += h.DieAction;
+                    return orc;
+                case 3:
+                    Dragon dragon = new Dragon();
+                    Logo.ShowDragonLogo();
+                    dragon.DieEvent += h.DieAction;
+                    return dragon;
+                default:
+                    Wolf wolf = new Wolf();
+                    Logo.ShowWolfLogo();
+                    wolf.DieEvent += h.DieAction;
+                    return wolf;
             }
-            return new Wolf();
         }
 
-        public static bool IsFight(Hero h,Map m, out string monster, out (int,int) monsterPos )
+
+
+        public static bool IsFight()
         {
-            switch (true)
+
+            Random random = new Random();
+            if (random.Next(26) == 25)
             {
-                case true when m.HiddenMap[h.X + 1, h.Y] != " ":
-                    {
-                        monster = m.HiddenMap[h.X + 1, h.Y];
-                        monsterPos = (h.X + 1, h.Y);
-                        return m.HiddenMap[h.X + 1, h.Y] != " ";
-                    }
-                case true when m.HiddenMap[h.X - 1, h.Y] != " ":
-                    {
-                        monster = m.HiddenMap[h.X - 1, h.Y];
-                        monsterPos = (h.X - 1, h.Y);
-                        return m.HiddenMap[h.X - 1, h.Y] != " ";
-                    }
-                case true when m.HiddenMap[h.X, h.Y + 1] != " ":
-                    {
-                        monster = m.HiddenMap[h.X, h.Y + 1];
-                        monsterPos = (h.X, h.Y + 1);
-                        return m.HiddenMap[h.X, h.Y + 1] != " ";
-                    }
-                case true when m.HiddenMap[h.X, h.Y - 1] != " ":
-                    {
-                        monster = m.HiddenMap[h.X, h.Y - 1];
-                        monsterPos = (h.X, h.Y - 1);
-                        return m.HiddenMap[h.X, h.Y - 1] != " ";
-                    }
+                return true;
             }
-            monster = " ";
-            monsterPos = (0, 0);
             return false;
         }
         public static void Fight(Hero fighter1, Entity fighter2)
         {
-            Console.WriteLine($"{fighter2.Name} vous attaque, soyez prêt!");
-            int choix = 1; 
+            string message = $"{fighter2.Name} vous attaque, soyez prêt!";
+            Hud.ShowInDialogBox(message, message.Length);
+            Console.ReadKey();
+            Hud.ShowInHeroFightBox(fighter1);
+            Hud.ShowInEnemyFightBox(fighter2);
+            int choix = 1;
             while (fighter1.IsAlive() && fighter2.IsAlive())
             {
                 int index = 1;
@@ -101,8 +84,9 @@ namespace HeroesVsMonsters.Utils
                     cki = Console.ReadKey();
                     Menu.Browse(cki, FightMenu.GetSizeMenu(), ref index);
                 } while (cki.Key != ConsoleKey.Enter);
-                
+
                 choix = Menu.SelectAction(index);
+                FightMenu.ClearMenu((152, 42));
                 switch (choix)
                 {
                     case 1:
@@ -116,21 +100,17 @@ namespace HeroesVsMonsters.Utils
                         break;
                     case 4: throw new NotImplementedException();
                 }
-                Console.ReadKey();
+                //Console.ReadKey();
                 if (fighter2.IsAlive())
                 {
                     fighter2.Attack(fighter1);
                 }
-                Console.ReadKey();
+                //Console.ReadKey();
             }
-            if (!fighter2.IsAlive())
-            {
-                foreach (ItemType item in fighter1.Sac.Items.Keys)
-                {
-                    Console.WriteLine($"{item} : {fighter1.Sac[item]} ");
-                }
-            }
+            Hud.ClearHeroFightBox();
+            Hud.ClearEnemyFightBox();
         }
-
     }
 }
+
+
