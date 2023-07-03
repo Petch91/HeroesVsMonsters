@@ -43,11 +43,10 @@ namespace HeroesVsMonsters.Entities
         public virtual void TakeDamage(int amount)
         {
             
-            string message = $"{Name} subit {amount} de dégats";
-            Hud.ShowInDialogBox(message, message.Length);
-            Console.ReadKey();
-            Hud.ShowInDialogBox(" ", 1);
+            Hud.ShowInDialogBox($"{Name} subit {amount} de dégats");
+            Hud.ShowInDialogBox("");
             CurrentHp -= amount;
+            IsDefented = false;
             if (!IsAlive())
             {
                 CurrentHp = 0;

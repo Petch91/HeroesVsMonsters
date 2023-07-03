@@ -12,12 +12,13 @@ namespace HeroesVsMonsters
 {
     public class Hud
     {
-        public static void ShowInDialogBox(string message,int messageSize)
+        public static void ShowInDialogBox(string message)
         {
             Console.SetCursorPosition(20,2);
             Console.WriteLine(new string(' ',100));
-            Console.SetCursorPosition(80 - messageSize, 2);
+            Console.SetCursorPosition(80 - message.Length, 2);
             Console.WriteLine(message + new string(' ', 30));
+            if (message!="") Console.ReadKey();
 
         }
         public static void ShowInStatBox(Hero h)

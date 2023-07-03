@@ -21,10 +21,7 @@ namespace HeroesVsMonsters.Entities.Monsters
 
         public override void Attack(Entity t)
         {
-            
-            string message = "AAAAHOOOOUUUUU";
-            Hud.ShowInDialogBox(message, message.Length);
-            Console.ReadKey();
+            Hud.ShowInDialogBox("AAAAHOOOOUUUUU");
             base.Attack(t);
         }
     }

@@ -55,40 +55,6 @@ namespace HeroesVsMonsters.Utils
                             ShowedMap[i, j] = " ";
                             break;
                     }
-                    //if (i - 1 >= 1 && j - 1 >= 1 && i + 2 < ShowedMap.GetLength(0) && j + 2 < ShowedMap.GetLength(1))
-                    //{
-                    //    if (ShowedMap[i, j + 1] == " " && ShowedMap[i, j + 2] == " " && ShowedMap[i, j - 1] == " " && ShowedMap[i, j - 2] == " ")
-                    //    {
-                    //        if (ShowedMap[i + 1, j - 1] == " " && ShowedMap[i - 1, j - 1] == " " && ShowedMap[i + 1, j + 1] == " " && ShowedMap[i - 1, j + 1] == " ")
-                    //        {
-                    //            if (ShowedMap[i + 1, j] == " " && ShowedMap[i + 2, j] == " " && ShowedMap[i - 1, j] == " " && ShowedMap[i - 2, j] == " ")
-                    //            {
-                    //                Random r = new Random();
-                    //                int rng = r.Next(15);
-
-                    //                switch (rng)
-                    //                {
-                    //                    case 0:
-                    //                    case 1:
-                    //                    case 3:
-                    //                    case 5:
-                    //                        ShowedMap[i, j] = "L";
-                    //                        countMonsters++;
-                    //                        break;
-                    //                    case 8:
-                    //                        ShowedMap[i, j] = "O";
-                    //                        countMonsters++;
-                    //                        break;
-                    //                    case 10:
-                    //                        ShowedMap[i, j] = "D";
-                    //                        countMonsters++;
-                    //                        break;
-                    //                }
-                    //            }
-
-                    //        }
-                    //    }
-                    //}
                 }
             }
             ShowedMap[h.X, h.Y] = "☻";
@@ -128,6 +94,11 @@ namespace HeroesVsMonsters.Utils
         {
             ShowedMap[oldPosition.Item1, oldPosition.Item2] = " ";
             ShowedMap[newPosition.Item1, newPosition.Item2] = modif;
+        }
+
+        public bool MoveAccepted((int, int) newPosition) 
+        {
+            return ShowedMap[newPosition.Item1, newPosition.Item2] == " "; 
         }
 
     }

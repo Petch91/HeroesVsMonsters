@@ -20,9 +20,7 @@ namespace HeroesVsMonsters.Entities.Monsters
 
         public override void Attack(Entity t)
         {
-            string message = "Je vais te bouffer";
-            Hud.ShowInDialogBox(message, message.Length);
-            Console.ReadKey();
+            Hud.ShowInDialogBox("Je vais te bouffer");
             base.Attack(t);
         }
         protected override void GenerateStats()

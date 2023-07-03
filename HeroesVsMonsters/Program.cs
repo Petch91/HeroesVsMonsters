@@ -1,23 +1,50 @@
 ﻿using HeroesVsMonsters;
 using HeroesVsMonsters.Entities;
 using HeroesVsMonsters.Entities.Heroes;
+using HeroesVsMonsters.Entities.Heroes.Heroes;
 using HeroesVsMonsters.Entities.Monsters;
 using HeroesVsMonsters.Menus;
 using HeroesVsMonsters.Utils;
 using System.Text;
+using System.Xml.Linq;
 
-Console.OutputEncoding = System.Text.Encoding.UTF8;
+Console.OutputEncoding = Encoding.UTF8;
+Console.CursorVisible = false;
 
-
-Human dante = new Human("Dante");
-Map map = new Map(dante);
-Console.SetCursorPosition(0, 0);
-Hud.ShowHud();
-while (true)
+CharacterButton CharChoice;
+Hero h;
+while(Game.NewGame(out CharChoice))
 {
-    Hud.ShowInStatBox(dante);
-    Game.Navigation(dante, map);
+    Console.Clear();
+    Console.WriteLine("Quel est le nom de votre personnage?: ");
+    string name = Console.ReadLine() ?? "";
+    switch (CharChoice)
+    {
+        case CharacterButton.Humain:
+            {
+                h = new Human(name);
+
+                break;
+            }
+        case CharacterButton.Nain:
+            {
+                h = new Dwarf(name);
+                break;
+            }
+        default: h = new Human(name); break;
+
+    }
+    Map map = new Map(h);
+    Console.SetCursorPosition(0, 0);
+    Hud.ShowHud();
+    while (true)
+    {
+        Hud.ShowInStatBox(h);
+        Game.Navigation(h, map);
+    }
 }
+
+
 //List<Monster> monsters = new List<Monster>();
 
 

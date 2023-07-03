@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace HeroesVsMonsters.Utils
@@ -240,6 +241,14 @@ namespace HeroesVsMonsters.Utils
             Console.WriteLine("  ");
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.ForegroundColor = ConsoleColor.DarkBlue;
+        }
+        public static void ShowLogoTitle()
+        {
+            Console.WriteLine("·▄▄▄ ▄▄▄·  ▐ ▄ ▄▄▄▄▄ ▄▄▄· .▄▄ ·  ▄· ▄▌  ▄▄▄   ▄▄▄· ▄▄ •\n" +
+                               "█  ·▐█ ▀█ •█▌▐█•██  ▐█ ▀█ ▐█ ▀. ▐█▪██▌  ▀▄ █·▐█ ▄█▐█ ▀ ▪\n" +
+                               "█▀▀▪▄█▀▀█ ▐█▐▐▌ ▐█.▪▄█▀▀█ ▄▀▀▀█▄▐█▌▐█▪  ▐▀▀▄  ██▀·▄█ ▀█▄\n" +
+                               "██ .▐█▪ ▐▌██▐█▌ ▐█▌·▐█▪ ▐▌▐█▄▪▐█ ▐█▀·.  ▐█•█▌▐█▪·•▐█▄▪▐█\n" +
+                               "▀▀▀  ▀  ▀ ▀▀ █▪ ▀▀▀  ▀  ▀  ▀▀▀▀   ▀ •   .▀  ▀.▀   ·▀▀▀▀");
         }
     }
 }

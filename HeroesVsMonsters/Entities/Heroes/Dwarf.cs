@@ -11,19 +11,15 @@ namespace HeroesVsMonsters.Entities.Heroes.Heroes
     {
         public Dwarf(string name) : base(name)
         {
+            Sprite = "🎅🏻";
             SpecialSkill = "Défense";
             X = 5;
             Y = 10;
         }
 
-        public override string SpecialSkill { get; }
-        
-
         public override void Attack(Entity t)
         {
-            string message = "Coup de hache dans ta gueule";
-            Hud.ShowInDialogBox(message, message.Length);
-            Console.ReadKey();
+            Hud.ShowInDialogBox("Coup de hache dans ta gueule");
             base.Attack(t);
         }
         protected override void GenerateStats()

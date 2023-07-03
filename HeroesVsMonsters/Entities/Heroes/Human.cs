@@ -12,18 +12,15 @@ namespace HeroesVsMonsters.Entities.Heroes
     {
         public Human(string name) : base(name)
         {
+            Sprite = "🧍🏻‍";
             SpecialSkill = "Boule de feu";
             X = 7;
             Y = 8;
         }
 
-        public override string SpecialSkill { get; }
-
         public override void Attack(Entity t)
         {
-            string message = "Coup d'épée dans ta gueule";
-            Hud.ShowInDialogBox(message, message.Length);
-            Console.ReadKey();
+            Hud.ShowInDialogBox("Coup d'épée dans ta gueule");
             base.Attack(t); 
         }
         protected override void GenerateStats()
@@ -35,9 +32,7 @@ namespace HeroesVsMonsters.Entities.Heroes
 
         public override void UseSkill(Entity e)
         {
-            string message = "Boule de feu dans ta gueule";
-            Hud.ShowInDialogBox(message, message.Length);
-            Console.ReadKey();
+            Hud.ShowInDialogBox("Boule de feu dans ta gueule");
             e.TakeDamage(Dice.Throws(DiceType.D6, 2, 2));
         }
     }

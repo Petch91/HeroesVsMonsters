@@ -21,9 +21,7 @@ namespace HeroesVsMonsters.Entities.Monsters
 
         public override void Attack(Entity t)
         {
-            string message = "Dracofeu attaque Lance-Flammes";
-            Hud.ShowInDialogBox(message, message.Length);
-            Console.ReadKey();
+            Hud.ShowInDialogBox("Dracofeu attaque Lance-Flammes");
             base.Attack(t);
         }
 

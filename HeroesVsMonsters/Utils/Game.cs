@@ -1,10 +1,12 @@
 ﻿using HeroesVsMonsters.Entities;
 using HeroesVsMonsters.Entities.Heroes;
+using HeroesVsMonsters.Entities.Heroes.Heroes;
 using HeroesVsMonsters.Entities.Monsters;
 using HeroesVsMonsters.Menus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,12 +19,12 @@ namespace HeroesVsMonsters.Utils
         {
             m.ShowMap();
             Hud.ShowInInventoryBox(h);
-            (int, int) previousPos = h.MoveHero(m.xMax, m.yMax);
+            (int, int) previousPos = h.MoveHero(m);
             m.ModifyMaps("☻", (h.X, h.Y), previousPos);
             if (IsFight())
             {
                 Hud.ClearMap(m);
-                
+
                 Fight(h, ChooseMonster(h));
             }
             //Console.Clear();
@@ -53,9 +55,6 @@ namespace HeroesVsMonsters.Utils
                     return wolf;
             }
         }
-
-
-
         public static bool IsFight()
         {
 
@@ -68,9 +67,7 @@ namespace HeroesVsMonsters.Utils
         }
         public static void Fight(Hero fighter1, Entity fighter2)
         {
-            string message = $"{fighter2.Name} vous attaque, soyez prêt!";
-            Hud.ShowInDialogBox(message, message.Length);
-            Console.ReadKey();
+            Hud.ShowInDialogBox($"{fighter2.Name} vous attaque, soyez prêt!");
             Hud.ShowInHeroFightBox(fighter1);
             Hud.ShowInEnemyFightBox(fighter2);
             int choix = 1;
@@ -109,6 +106,38 @@ namespace HeroesVsMonsters.Utils
             }
             Hud.ClearHeroFightBox();
             Hud.ClearEnemyFightBox();
+        }
+
+        public static bool NewGame(out CharacterButton cb)
+        {
+            int index = 1;
+            int choix = 1;
+            ConsoleKeyInfo cki;
+            do
+            {
+                GameMenu.Show(index, (0, 5));
+                cki = Console.ReadKey();
+                Menu.Browse(cki, GameMenu.GetSizeMenu(), ref index);
+            } while (cki.Key != ConsoleKey.Enter);
+            choix = Menu.SelectAction(index);
+            if (choix == 1)
+            {
+                Console.Clear();
+                do
+                {
+                    SelectCharMenu.Show(index, (0, 5));
+                    cki = Console.ReadKey();
+                    Menu.Browse(cki, SelectCharMenu.GetSizeMenu(), ref index);
+                } while (cki.Key != ConsoleKey.Enter);
+                choix = Menu.SelectAction(index);
+                switch (choix)
+                {
+                    case 1: cb = CharacterButton.Humain; return true;
+                    case 2: cb = CharacterButton.Nain; return true;
+                }
+            }
+            cb = CharacterButton.Nain;
+            return false;
         }
     }
 }
