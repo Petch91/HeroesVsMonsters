@@ -98,7 +98,11 @@ namespace HeroesVsMonsters.Utils
 
         public bool MoveAccepted((int, int) newPosition) 
         {
-            return ShowedMap[newPosition.Item1, newPosition.Item2] == " "; 
+         if (newPosition.Item1 >= 0 && newPosition.Item1 < xMax && newPosition.Item2 >= 0 && newPosition.Item2 < yMax)
+         {
+            return ShowedMap[newPosition.Item1, newPosition.Item2] == " ";
+         }
+         return false; 
         }
 
     }
